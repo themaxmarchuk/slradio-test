@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:flutter_radio_player/flutter_radio_player.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,19 +18,19 @@ class MyApp extends StatelessWidget {
 }
 
 class Player extends StatelessWidget {
-  final player = AudioPlayer();
+  final FlutterRadioPlayer player = new FlutterRadioPlayer();
 
-  void togglePlayer() {
-    if (player.playing) {
-      player.pause();
-    } else {
-      player.play();
-    }
+  Player() {
+    player.init("Slavic Life Radio", "Subtitle Song Name",
+        "http://stream.radiojar.com/de1wc765sd0uv", "false");
+  }
+
+  void dispose() {
+    player.stop();
   }
 
   @override
   Widget build(BuildContext context) {
-    player.setUrl('http://stream.radiojar.com/de1wc765sd0uv');
     return Container(
         width: 300,
         child: Center(
@@ -58,7 +58,7 @@ class Player extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 iconSize: 50,
-                onPressed: togglePlayer)
+                onPressed: player.playOrPause)
           ],
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
